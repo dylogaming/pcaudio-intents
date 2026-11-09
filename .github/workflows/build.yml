@@ -1,0 +1,17 @@
+name: metadata
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen && xcodegen
+      - run: xcodebuild -project Intents.xcodeproj -scheme PCAudio -sdk iphoneos -destination generic/platform=iOS -configuration Release -derivedDataPath dd build | tail -40
+      - run: |
+          A=$(find dd -name PCAudio.app -type d | head -1)
+          mkdir -p out/app out/widget
+          cp -R "$A/Metadata.appintents" out/app/
+          cp -R "$A/PlugIns/PCAudioWidget.appex/Metadata.appintents" out/widget/
+          find out -type f
+      - uses: actions/upload-artifact@v4
+        with: { name: metadata, path: out }
