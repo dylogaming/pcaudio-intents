@@ -12,4 +12,4 @@ targets:
     type: app-extension
     platform: iOS
     sources: [Widget, ToggleIntent.swift]
-    settings: { base: { PRODUCT_MODULE_NAME: PCAudioWidget, PRODUCT_BUNDLE_IDENTIFIER: com.dylogaming.pcaudio.widget, INFOPLIST_KEY_NSExtension: "", INFOPLIST_FILE: Widget-Info.plist, GENERATE_INFOPLIST_FILE: "NO" } }
+    settings: { base: { PRODUCT_MODULE_NAME: PCAudioWidget, PRODUCT_BUNDLE_IDENTIFIER: com.dylogaming.pcaudio.widget, INFOPLIST_FILE: Widget-Info.plist, GENERATE_INFOPLIST_FILE: "NO" } }
