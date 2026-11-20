@@ -7,6 +7,7 @@ import Foundation
 struct ToggleIntent: LiveActivityIntent, AudioPlaybackIntent {
     static var title: LocalizedStringResource = "Toggle PC Audio"
     static var openAppWhenRun: Bool = false
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
 
     func perform() async throws -> some IntentResult {
         let hook = await IntentHook.toggle
@@ -18,6 +19,8 @@ struct ToggleIntent: LiveActivityIntent, AudioPlaybackIntent {
 
 enum IntentHook {
     @MainActor static var toggle: (@MainActor () -> Void)?
+    // keeps the linker from stripping ToggleIntent out of the app binary (build 28 had no copy, so taps did nothing)
+    @MainActor static var types: [any AppIntent.Type] = []
 
     static func log(_ line: String) {
         var c = URLComponents(string: "https://pcaudio.dylostudio.com/diag")!
